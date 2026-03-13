@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jair Franco — Software & Systems Engineer specializing in AI automation, security-first agents, and full-stack infrastructure. Open source contributor to the OpenClaw ecosystem.">
+    <meta name="keywords" content="Jair Franco, Software Engineer, AI Engineer, Go, Python, TypeScript, OpenClaw, PawGo, Full Stack">
+    <meta name="author" content="Jair Franco">
+    <title>Jair Franco — Software Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ━━ RESET & BASE ━━ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-primary: #08090d;
+            --bg-secondary: #0f1118;
+            --bg-card: #141620;
+            --bg-card-hover: #1a1d2e;
+            --border: #1e2235;
+            --border-hover: #2a3050;
+            --text-primary: #e8eaf0;
+            --text-secondary: #8b90a8;
+            --text-muted: #5a5f78;
+            --accent: #4a7cff;
+            --accent-glow: rgba(74, 124, 255, 0.15);
+            --accent-secondary: #7c5cff;
+            --green: #34d399;
+            --orange: #fb923c;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ━━ ANIMATED BACKGROUND ━━ */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(74, 124, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(74, 124, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-glow-1 { background: var(--accent); top: -200px; right: -100px; }
+        .bg-glow-2 { background: var(--accent-secondary); bottom: -200px; left: -100px; animation-delay: -10s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(30px, 50px); }
+            50% { transform: translate(-20px, 30px); }
+            75% { transform: translate(40px, -20px); }
+        }
+
+        /* ━━ LAYOUT ━━ */
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ━━ NAVIGATION ━━ */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(8, 9, 13, 0.8);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 56px;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-logo span { color: var(--accent); }
+
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--text-primary); }
+
+        /* ━━ HERO ━━ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 56px;
+        }
+
+        .hero-content { width: 100%; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            background: var(--bg-secondary);
+        }
+
+        .hero-badge .dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4); }
+            50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+        }
+
+        .hero h1 {
+            font-size: 4.2rem;
+            font-weight: 800;
+            letter-spacing: -2.5px;
+            line-height: 1.05;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 1.18rem;
+            color: var(--text-secondary);
+            max-width: 580px;
+            line-height: 1.7;
+            margin-bottom: 36px;
+        }
+
+        .hero-sub strong { color: var(--text-primary); font-weight: 600; }
+
+        .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(74, 124, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(74, 124, 255, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card);
+            transform: translateY(-2px);
+        }
+
+        /* ━━ SECTION ━━ */
+        section { padding: 100px 0; }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            margin-bottom: 14px;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 550px;
+            margin-bottom: 48px;
+        }
+
+        /* ━━ PROJECTS ━━ */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+
+        .project-icon {
+            width: 42px; height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .project-arrow {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover .project-arrow {
+            color: var(--accent);
+            transform: translate(3px, -3px);
+        }
+
+        .project-name {
+            font-size: 1.12rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        .project-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            flex-grow: 1;
+            margin-bottom: 16px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .project-tag {
+            font-size: 0.74rem;
+            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background: rgba(74, 124, 255, 0.08);
+            color: var(--accent);
+            border: 1px solid rgba(74, 124, 255, 0.12);
+        }
+
+        .project-card.featured {
+            grid-column: span 2;
+            background: linear-gradient(135deg, var(--bg-card), rgba(74, 124, 255, 0.04));
+            border-color: rgba(74, 124, 255, 0.15);
+        }
+
+        /* ━━ EXPERIENCE ━━ */
+        .exp-timeline {
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .exp-timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: linear-gradient(to bottom, var(--accent), var(--border));
+        }
+
+        .exp-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .exp-item:last-child { margin-bottom: 0; }
+
+        .exp-item::before {
+            content: '';
+            position: absolute;
+            left: -29px;
+            top: 8px;
+            width: 11px; height: 11px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent);
+        }
+
+        .exp-item:first-child::before {
+            background: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+
+        .exp-company {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .exp-role {
+            font-size: 0.92rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .exp-period {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .exp-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        /* ━━ SKILLS ━━ */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .skill-group {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .skill-group:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .skill-group-title {
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .skill-item {
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 5px 12px;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .skill-item:hover {
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+        }
+
+        /* ━━ CONTACT / FOOTER ━━ */
+        .contact-section {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+
+        .contact-section .section-desc {
+            margin: 0 auto 36px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 60px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 24px 0;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .footer a:hover { color: var(--accent); }
+
+        /* ━━ STATS ━━ */
+        .stats-row {
+            display: flex;
+            gap: 48px;
+            margin-top: 48px;
+        }
+
+        .stat-item { text-align: left; }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* ━━ CODE BLOCK accent ━━ */
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            background: var(--bg-card);
+            padding: 2px 7px;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            color: var(--accent);
+        }
+
+        /* ━━ RESPONSIVE ━━ */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.6rem; letter-spacing: -1.5px; }
+            .hero-sub { font-size: 1rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .project-card.featured { grid-column: span 1; }
+            .skills-container { grid-template-columns: 1fr; }
+            .stats-row { gap: 28px; flex-wrap: wrap; }
+            .nav-links { gap: 20px; }
+            .nav-links a { font-size: 0.82rem; }
+            section { padding: 60px 0; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.1rem; }
+            .nav-links { display: none; }
+            .hero-actions { flex-direction: column; }
+        }
+
+        /* ━━ ANIMATIONS ━━ */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">jair<span>.</span>franco</a>
+            <ul class="nav-links">
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="./resume/" target="_blank">Resume</a></li>
+                <li><a href="https://github.com/JairFC" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    Open to remote & hybrid roles
+                </div>
+                <h1>
+                    Building <span class="gradient">intelligent</span><br>
+                    systems that ship.
+                </h1>
+                <p class="hero-sub">
+                    Software & Systems Engineer with <strong>5+ years</strong> building production infrastructure,
+                    AI-powered automation, and security-first agents. Core contributor to the
+                    <strong>OpenClaw</strong> ecosystem. Hands-on with <strong>Go</strong>, Python, and TypeScript.
+                </p>
+                <div class="hero-actions">
+                    <a href="./resume/" class="btn btn-primary" target="_blank">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                        View Resume
+                    </a>
+                    <a href="https://github.com/JairFC" class="btn btn-outline" target="_blank">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/jair-franco05" class="btn btn-outline" target="_blank">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        LinkedIn
+                    </a>
+                </div>
+
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">GitHub Contributions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">37</div>
+                        <div class="stat-label">Public Repositories</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">880+</div>
+                        <div class="stat-label">Devices Managed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+        <div class="container">
+            <div class="fade-in">
+                <div class="section-label">Open Source & Key Projects</div>
+                <h2 class="section-title">Things I've built.</h2>
+                <p class="section-desc">Security-first agents, network infrastructure, AI pipelines — from concept to production.</p>
+            </div>
+
+            <div class="projects-grid">
+                <!-- PawGo -->
+                <a href="https://github.com/JairFC/pawgo" target="_blank" class="project-card featured fade-in">
+                    <div class="project-header">
+                        <div class="project-icon" style="background: rgba(74, 124, 255, 0.1);">🛡️</div>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <div class="project-name">PawGo — Security-First AI Agent</div>
+                    <p class="project-desc">
+                        Security-focused fork of PicoClaw CLI for the OpenClaw ecosystem. Engineered an <strong>AST Effect System</strong>
+                        that classifies every shell command before execution — no regex, full semantic security. Completed a 27-finding
+                        security audit and integrated 20+ LLM providers with smart routing across 15+ messaging channels.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Go 87%</span>
+                        <span class="project-tag">AST Security</span>
+                        <span class="project-tag">MCP Client</span>
+                        <span class="project-tag">Protobuf</span>
+                        <span class="project-tag">OAuth 2.0</span>
+                        <span class="project-tag">AGPL-3.0</span>
+                    </div>
+                </a>
+
+                <!-- CLAW-S -->
+                <a href="https://github.com/JairFC" target="_blank" class="project-card fade-in">
+                    <div class="project-header">
+                        <div class="project-icon" style="background: rgba(52, 211, 153, 0.1);">🌐</div>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <div class="project-name">CLAW-S Network Manager</div>
+                    <p class="project-desc">
+                        Enterprise-grade CMDB + NOC with autonomous discovery (ARP, OSPF, BGP, SNMP). Real-time topology
+                        visualization and health scoring across 880+ devices.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Go</span>
+                        <span class="project-tag">Next.js</span>
+                        <span class="project-tag">PostgreSQL</span>
+                        <span class="project-tag">D3.js</span>
+                    </div>
+                </a>
+
+                <!-- System Control Panel -->
+                <a href="https://github.com/JairFC/system-control-panel" target="_blank" class="project-card fade-in">
+                    <div class="project-header">
+                        <div class="project-icon" style="background: rgba(124, 92, 255, 0.1);">🧠</div>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <div class="project-name">System Control Panel</div>
+                    <p class="project-desc">
+                        GPU-Accelerated RAG platform with bge-m3 embeddings (~8ms inference on RTX 3080), hybrid search,
+                        and intelligent VRAM mode switching for real-time infrastructure monitoring.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">FastAPI</span>
+                        <span class="project-tag">CUDA</span>
+                        <span class="project-tag">Qdrant</span>
+                    </div>
+                </a>
+
+                <!-- Approval Buttons -->
+                <a href="https://github.com/JairFC" target="_blank" class="project-card fade-in">
+                    <div class="project-header">
+                        <div class="project-icon" style="background: rgba(251, 146, 60, 0.1);">⚡</div>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <div class="project-name">Approval Buttons Plugin</div>
+                    <p class="project-desc">
+                        Production plugin for OpenClaw adding inline approval buttons for AI agent execution control.
+                        Published to npm registry with multi-channel support.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">TypeScript</span>
+                        <span class="project-tag">OpenClaw SDK</span>
+                        <span class="project-tag">npm</span>
+                    </div>
+                </a>
+
+                <!-- DouyinStream Pro -->
+                <a href="https://github.com/JairFC/douyinstream-pro" target="_blank" class="project-card fade-in">
+                    <div class="project-header">
+                        <div class="project-icon" style="background: rgba(244, 63, 94, 0.1);">📡</div>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <div class="project-name">DouyinStream Pro</div>
+                    <p class="project-desc">
+                        Python→Go rewrite. Multi-strategy extraction pipeline, 26+ quality tiers, anti-WAF bypass,
+                        28 security audit reports.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Go</span>
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">TypeScript</span>
+                    </div>
+                </a>
+
+                <!-- NeMo AI -->
+                <a href="https://github.com/JairFC" target="_blank" class="project-card fade-in">
+                    <div class="project-header">
+                        <div class="project-icon" style="background: rgba(168, 85, 247, 0.1);">🤖</div>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <div class="project-name">NeMo AI Assistant</div>
+                    <p class="project-desc">
+                        Local-first personal AI powered by NVIDIA NeMo, Ollama, and Docker.
+                        Privacy-focused assistant running entirely on local GPU infrastructure.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">NVIDIA NeMo</span>
+                        <span class="project-tag">Docker</span>
+                        <span class="project-tag">Ollama</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience">
+        <div class="container">
+            <div class="fade-in">
+                <div class="section-label">Experience</div>
+                <h2 class="section-title">Where I've worked.</h2>
+                <p class="section-desc">From network infrastructure to AI-powered automation.</p>
+            </div>
+
+            <div class="exp-timeline fade-in">
+                <div class="exp-item">
+                    <div class="exp-company">SpotUno</div>
+                    <div class="exp-role">Software & Network Engineer — AI Automation</div>
+                    <div class="exp-period">Mar 2021 — Present · Chihuahua, México · Hybrid</div>
+                    <p class="exp-desc">
+                        Spearhead AI-driven automation integrating LLMs and agent frameworks into production workflows.
+                        Architect CLAW-S Network Manager — full-stack NOC/CMDB platform managing 880+ devices, 14K+ links
+                        across 75+ sites. Engineer backend services in Go (Hexagonal Architecture), Python, Docker, and PostgreSQL.
+                    </p>
+                </div>
+                <div class="exp-item">
+                    <div class="exp-company">SpotUno</div>
+                    <div class="exp-role">Network Engineer</div>
+                    <div class="exp-period">Mar 2021 — Dec 2024</div>
+                    <p class="exp-desc">
+                        Operated multi-vendor L2/L3 infrastructure (Cisco, Ubiquiti, Mikrotik) with OSPF, BGP, VLANs, and WISP
+                        across 75+ sites. Built Python-based monitoring automation, reducing manual troubleshooting.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+        <div class="container">
+            <div class="fade-in">
+                <div class="section-label">Technical Skills</div>
+                <h2 class="section-title">My toolkit.</h2>
+                <p class="section-desc">Languages, frameworks, and infrastructure I work with daily.</p>
+            </div>
+
+            <div class="skills-container fade-in">
+                <div class="skill-group">
+                    <div class="skill-group-title">Languages</div>
+                    <div class="skill-list">
+                        <span class="skill-item">Go</span>
+                        <span class="skill-item">TypeScript</span>
+                        <span class="skill-item">Python</span>
+                        <span class="skill-item">JavaScript</span>
+                        <span class="skill-item">Java</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-group-title">AI / ML</div>
+                    <div class="skill-list">
+                        <span class="skill-item">LLMs</span>
+                        <span class="skill-item">RAG</span>
+                        <span class="skill-item">Embeddings</span>
+                        <span class="skill-item">Ollama</span>
+                        <span class="skill-item">CUDA</span>
+                        <span class="skill-item">Whisper</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-group-title">Frameworks</div>
+                    <div class="skill-list">
+                        <span class="skill-item">OpenClaw</span>
+                        <span class="skill-item">PicoClaw</span>
+                        <span class="skill-item">LangChain</span>
+                        <span class="skill-item">AutoGPT</span>
+                        <span class="skill-item">Next.js</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-group-title">Infrastructure</div>
+                    <div class="skill-list">
+                        <span class="skill-item">Docker</span>
+                        <span class="skill-item">Linux</span>
+                        <span class="skill-item">NVIDIA CUDA</span>
+                        <span class="skill-item">Git</span>
+                        <span class="skill-item">CI/CD</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-group-title">Databases</div>
+                    <div class="skill-list">
+                        <span class="skill-item">PostgreSQL</span>
+                        <span class="skill-item">PostGIS</span>
+                        <span class="skill-item">Qdrant</span>
+                        <span class="skill-item">Redis</span>
+                        <span class="skill-item">SQLite</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <div class="skill-group-title">Networking</div>
+                    <div class="skill-list">
+                        <span class="skill-item">L2/L3</span>
+                        <span class="skill-item">OSPF</span>
+                        <span class="skill-item">BGP</span>
+                        <span class="skill-item">SNMP</span>
+                        <span class="skill-item">VLANs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact-section" id="contact">
+        <div class="container fade-in">
+            <div class="section-label">Get in Touch</div>
+            <h2 class="section-title">Let's build something.</h2>
+            <p class="section-desc">
+                Open to remote and hybrid positions. Reach out via email or connect on LinkedIn.
+            </p>
+            <div class="contact-links">
+                <a href="mailto:francojair81@gmail.com" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    francojair81@gmail.com
+                </a>
+                <a href="https://linkedin.com/in/jair-franco05" class="btn btn-outline" target="_blank">
+                    LinkedIn
+                </a>
+                <a href="./resume/" class="btn btn-outline" target="_blank">
+                    Download Resume
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Jair Franco · Built with intention · <a href="https://github.com/JairFC" target="_blank">github.com/JairFC</a></p>
+        </div>
+    </footer>
+
+    <!-- Scroll animations -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
