@@ -253,11 +253,44 @@
             .skills-container { grid-template-columns: 1fr; }
             .stats-row { gap: 28px; flex-wrap: wrap; }
             section { padding: 60px 0; }
+            .nav-links { display: none; }
+            .hero-actions { flex-direction: column; }
+            .lang-switch { margin-left: auto; }
+        }
+        .lang-switch {
+            display: flex;
+            gap: 2px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 2px;
+            margin-left: 12px;
+        }
+        .lang-switch button {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.4);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.3px;
+        }
+        .lang-switch button:hover {
+            color: rgba(255,255,255,0.7);
+        }
+        .lang-switch button.active {
+            background: rgba(74, 124, 255, 0.3);
+            color: #fff;
+        }
+        [data-i18n] {
+            transition: opacity 0.15s ease;
         }
         @media (max-width: 480px) {
             .logo-canvas { width: 340px; height: 100px; }
             .hero-name { font-size: 1.8rem; }
-            .nav-links { display: none; }
             .hero-actions { flex-direction: column; }
         }
     </style>
@@ -294,13 +327,18 @@
                 </svg>
             </a>
             <ul class="nav-links">
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="./services/">Services</a></li>
-                <li><a href="./resume/" target="_blank">Resume</a></li>
+                <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+                <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
+                <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+                <li><a href="./services/" data-i18n="nav.services">Services</a></li>
+                <li><a href="./resume/" target="_blank" data-i18n="nav.resume">Resume</a></li>
                 <li><a href="https://github.com/JairFC" target="_blank">GitHub</a></li>
             </ul>
+            <div class="lang-switch">
+                <button data-lang="en" class="active">EN</button>
+                <button data-lang="es">ES</button>
+                <button data-lang="zh">中文</button>
+            </div>
         </div>
     </nav>
 
@@ -310,23 +348,19 @@
             <div class="hero-content fade-in">
                 <div class="hero-badge">
                     <span class="dot"></span>
-                    Open to remote & hybrid roles
+                    <span data-i18n="hero.badge">Open to remote &amp; hybrid roles</span>
                 </div>
 
                 <!-- 3D PARTICLE CONSTELLATION LOGO -->
                 <canvas class="logo-canvas" id="logo-canvas"></canvas>
 
                 <h1 class="hero-name">Jair <span class="gradient">F.</span></h1>
-                <div class="hero-role">Software & Systems Engineer</div>
-                <p class="hero-sub">
-                    <strong>5+ years</strong> building production infrastructure,
-                    AI-powered automation, and security-first agents. Contributor to the
-                    <strong>OpenClaw</strong> ecosystem. Hands-on with <strong>Go</strong>, Python, and TypeScript.
-                </p>
+                <div class="hero-role" data-i18n="hero.role">Software &amp; Systems Engineer</div>
+                <p class="hero-sub" data-i18n="hero.sub"><strong>5+ years</strong> building production infrastructure, AI-powered automation, and security-first agents. Contributor to the <strong>OpenClaw</strong> ecosystem. Hands-on with <strong>Go</strong>, Python, and TypeScript.</p>
                 <div class="hero-actions">
                     <a href="./resume/" class="btn btn-primary" target="_blank">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                        View Resume
+                        <span data-i18n="hero.viewResume">View Resume</span>
                     </a>
                     <a href="https://github.com/JairFC" class="btn btn-outline" target="_blank">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
@@ -338,10 +372,10 @@
                     </a>
                 </div>
                 <div class="stats-row">
-                    <div class="stat-item"><div class="stat-number">5+</div><div class="stat-label">Years Experience</div></div>
-                    <div class="stat-item"><div class="stat-number">200+</div><div class="stat-label">GitHub Contributions</div></div>
-                    <div class="stat-item"><div class="stat-number">37</div><div class="stat-label">Public Repositories</div></div>
-                    <div class="stat-item"><div class="stat-number">880+</div><div class="stat-label">Devices Managed</div></div>
+                    <div class="stat-item"><div class="stat-number">5+</div><div class="stat-label" data-i18n="stats.years">Years Experience</div></div>
+                    <div class="stat-item"><div class="stat-number">200+</div><div class="stat-label" data-i18n="stats.contributions">GitHub Contributions</div></div>
+                    <div class="stat-item"><div class="stat-number">37</div><div class="stat-label" data-i18n="stats.repos">Public Repositories</div></div>
+                    <div class="stat-item"><div class="stat-number">880+</div><div class="stat-label" data-i18n="stats.devices">Devices Managed</div></div>
                 </div>
             </div>
         </div>
@@ -351,9 +385,9 @@
     <section id="projects">
         <div class="container">
             <div class="fade-in">
-                <div class="section-label">Open Source & Key Projects</div>
-                <h2 class="section-title">Things I've built.</h2>
-                <p class="section-desc">Security-first agents, network infrastructure, AI pipelines — from concept to production.</p>
+                <div class="section-label" data-i18n="projects.label">Open Source &amp; Key Projects</div>
+                <h2 class="section-title" data-i18n="projects.title">Things I've built.</h2>
+                <p class="section-desc" data-i18n="projects.desc">Security-first agents, network infrastructure, AI pipelines — from concept to production.</p>
             </div>
             <div class="projects-grid">
                 <a href="https://github.com/JairFC/pawgo" target="_blank" class="project-card featured fade-in">
@@ -363,8 +397,8 @@
                         </div>
                         <span class="project-arrow">&#8599;</span>
                     </div>
-                    <div class="project-name">PawGo — Security-First AI Agent</div>
-                    <p class="project-desc">Security-focused fork of PicoClaw CLI for the OpenClaw ecosystem. Engineered an <strong>AST Effect System</strong> that classifies every shell command before execution — no regex, full semantic security. Completed a 27-finding security audit and integrated 20+ LLM providers with smart routing across 15+ messaging channels.</p>
+                    <div class="project-name" data-i18n="projects.pawgo.name">PawGo — Security-First AI Agent</div>
+                    <p class="project-desc" data-i18n="projects.pawgo.desc">Security-focused fork of PicoClaw CLI for the OpenClaw ecosystem. Engineered an <strong>AST Effect System</strong> that classifies every shell command before execution — no regex, full semantic security. Completed a 27-finding security audit and integrated 20+ LLM providers with smart routing across 15+ messaging channels.</p>
                     <div class="project-tags">
                         <span class="project-tag">Go 87%</span><span class="project-tag">AST Security</span>
                         <span class="project-tag">MCP Client</span><span class="project-tag">Protobuf</span>
@@ -378,8 +412,8 @@
                         </div>
                         <div style="display:flex;align-items:center;gap:8px;"><span class="project-badge">Private</span><span class="project-arrow">&#8599;</span></div>
                     </div>
-                    <div class="project-name">CLAW-S Network Manager</div>
-                    <p class="project-desc">Enterprise-grade CMDB + NOC with autonomous discovery (ARP, OSPF, BGP, SNMP). Real-time topology visualization and health scoring across 880+ devices.</p>
+                    <div class="project-name" data-i18n="projects.claws.name">CLAW-S Network Manager</div>
+                    <p class="project-desc" data-i18n="projects.claws.desc">Enterprise-grade CMDB + NOC with autonomous discovery (ARP, OSPF, BGP, SNMP). Real-time topology visualization and health scoring across 880+ devices.</p>
                     <div class="project-tags">
                         <span class="project-tag">Go</span><span class="project-tag">Next.js</span>
                         <span class="project-tag">PostgreSQL</span><span class="project-tag">D3.js</span>
@@ -392,8 +426,8 @@
                         </div>
                         <span class="project-arrow">&#8599;</span>
                     </div>
-                    <div class="project-name">System Control Panel</div>
-                    <p class="project-desc">GPU-Accelerated RAG platform with bge-m3 embeddings (~8ms inference on RTX 3080), hybrid search, and intelligent VRAM mode switching.</p>
+                    <div class="project-name" data-i18n="projects.scp.name">System Control Panel</div>
+                    <p class="project-desc" data-i18n="projects.scp.desc">GPU-Accelerated RAG platform with bge-m3 embeddings (~8ms inference on RTX 3080), hybrid search, and intelligent VRAM mode switching.</p>
                     <div class="project-tags">
                         <span class="project-tag">Python</span><span class="project-tag">FastAPI</span>
                         <span class="project-tag">CUDA</span><span class="project-tag">Qdrant</span>
@@ -406,8 +440,8 @@
                         </div>
                         <span class="project-arrow">&#8599;</span>
                     </div>
-                    <div class="project-name">Approval Buttons Plugin</div>
-                    <p class="project-desc">Production plugin for OpenClaw adding inline approval buttons for AI agent execution control. Published to npm with multi-channel support.</p>
+                    <div class="project-name" data-i18n="projects.approval.name">Approval Buttons Plugin</div>
+                    <p class="project-desc" data-i18n="projects.approval.desc">Production plugin for OpenClaw adding inline approval buttons for AI agent execution control. Published to npm with multi-channel support.</p>
                     <div class="project-tags">
                         <span class="project-tag">TypeScript</span><span class="project-tag">OpenClaw SDK</span><span class="project-tag">npm</span>
                     </div>
@@ -419,8 +453,8 @@
                         </div>
                         <span class="project-arrow">&#8599;</span>
                     </div>
-                    <div class="project-name">DouyinStream Pro</div>
-                    <p class="project-desc">Python to Go rewrite. Multi-strategy extraction pipeline, 26+ quality tiers, anti-WAF bypass, 28 security audit reports.</p>
+                    <div class="project-name" data-i18n="projects.douyin.name">DouyinStream Pro</div>
+                    <p class="project-desc" data-i18n="projects.douyin.desc">Python to Go rewrite. Multi-strategy extraction pipeline, 26+ quality tiers, anti-WAF bypass, 28 security audit reports.</p>
                     <div class="project-tags">
                         <span class="project-tag">Go</span><span class="project-tag">Python</span><span class="project-tag">TypeScript</span>
                     </div>
@@ -432,8 +466,8 @@
                         </div>
                         <span class="project-arrow">&#8599;</span>
                     </div>
-                    <div class="project-name">NeMo AI Assistant</div>
-                    <p class="project-desc">Local-first personal AI powered by NVIDIA NeMo, Ollama, and Docker. Privacy-focused assistant running entirely on local GPU infrastructure.</p>
+                    <div class="project-name" data-i18n="projects.nemo.name">NeMo AI Assistant</div>
+                    <p class="project-desc" data-i18n="projects.nemo.desc">Local-first personal AI powered by NVIDIA NeMo, Ollama, and Docker. Privacy-focused assistant running entirely on local GPU infrastructure.</p>
                     <div class="project-tags">
                         <span class="project-tag">NVIDIA NeMo</span><span class="project-tag">Docker</span><span class="project-tag">Ollama</span>
                     </div>
@@ -445,8 +479,8 @@
                         </div>
                         <div style="display:flex;align-items:center;gap:8px;"><span class="project-badge">Private</span><span class="project-arrow">&#8599;</span></div>
                     </div>
-                    <div class="project-name">CrediNet v2 — Credit Management Platform</div>
-                    <p class="project-desc">Full-stack credit management system with biweekly payment engine, automated amortization schedules, associate credit lifecycle, period-based debt reconciliation, and 20+ API routers. Clean Architecture backend with PostgreSQL triggers for audit logging.</p>
+                    <div class="project-name" data-i18n="projects.credinet.name">CrediNet v2 — Credit Management Platform</div>
+                    <p class="project-desc" data-i18n="projects.credinet.desc">Full-stack credit management system with biweekly payment engine, automated amortization schedules, associate credit lifecycle, period-based debt reconciliation, and 20+ API routers. Clean Architecture backend with PostgreSQL triggers for audit logging.</p>
                     <div class="project-tags">
                         <span class="project-tag">FastAPI</span><span class="project-tag">React + Vite</span>
                         <span class="project-tag">PostgreSQL</span><span class="project-tag">Clean Arch</span>
@@ -460,22 +494,22 @@
     <section id="experience">
         <div class="container">
             <div class="fade-in">
-                <div class="section-label">Experience</div>
-                <h2 class="section-title">Where I've worked.</h2>
-                <p class="section-desc">From network infrastructure to AI-powered automation.</p>
+                <div class="section-label" data-i18n="exp.label">Experience</div>
+                <h2 class="section-title" data-i18n="exp.title">Where I've worked.</h2>
+                <p class="section-desc" data-i18n="exp.desc">From network infrastructure to AI-powered automation.</p>
             </div>
             <div class="exp-timeline fade-in">
                 <div class="exp-item">
                     <div class="exp-company">SpotUno</div>
-                    <div class="exp-role">Software & Network Engineer — AI Automation</div>
-                    <div class="exp-period">Mar 2021 — Present · Chihuahua, Mexico · Hybrid</div>
-                    <p class="exp-desc">Spearhead AI-driven automation integrating LLMs and agent frameworks into production workflows. Architect CLAW-S Network Manager — full-stack NOC/CMDB platform managing 880+ devices, 14K+ links across 75+ sites.</p>
+                    <div class="exp-role" data-i18n="exp.role1">Software &amp; Network Engineer — AI Automation</div>
+                    <div class="exp-period" data-i18n="exp.period1">Mar 2021 — Present · Chihuahua, Mexico · Hybrid</div>
+                    <p class="exp-desc" data-i18n="exp.desc1">Spearhead AI-driven automation integrating LLMs and agent frameworks into production workflows. Architect CLAW-S Network Manager — full-stack NOC/CMDB platform managing 880+ devices, 14K+ links across 75+ sites.</p>
                 </div>
                 <div class="exp-item">
                     <div class="exp-company">SpotUno</div>
-                    <div class="exp-role">Network Engineer</div>
-                    <div class="exp-period">Mar 2021 — Dec 2024</div>
-                    <p class="exp-desc">Operated multi-vendor L2/L3 infrastructure (Cisco, Ubiquiti, Mikrotik) with OSPF, BGP, VLANs across 75+ sites. Built Python-based monitoring automation.</p>
+                    <div class="exp-role" data-i18n="exp.role2">Network Engineer</div>
+                    <div class="exp-period" data-i18n="exp.period2">Mar 2021 — Dec 2024</div>
+                    <p class="exp-desc" data-i18n="exp.desc2">Operated multi-vendor L2/L3 infrastructure (Cisco, Ubiquiti, Mikrotik) with OSPF, BGP, VLANs across 75+ sites. Built Python-based monitoring automation.</p>
                 </div>
             </div>
         </div>
@@ -485,17 +519,17 @@
     <section id="skills">
         <div class="container">
             <div class="fade-in">
-                <div class="section-label">Technical Skills</div>
-                <h2 class="section-title">My toolkit.</h2>
-                <p class="section-desc">Languages, frameworks, and infrastructure I work with daily.</p>
+                <div class="section-label" data-i18n="skills.label">Technical Skills</div>
+                <h2 class="section-title" data-i18n="skills.title">My toolkit.</h2>
+                <p class="section-desc" data-i18n="skills.desc">Languages, frameworks, and infrastructure I work with daily.</p>
             </div>
             <div class="skills-container fade-in">
-                <div class="skill-group"><div class="skill-group-title">Languages</div><div class="skill-list"><span class="skill-item">Go</span><span class="skill-item">TypeScript</span><span class="skill-item">Python</span><span class="skill-item">JavaScript</span><span class="skill-item">Java</span></div></div>
+                <div class="skill-group"><div class="skill-group-title" data-i18n="skills.languages">Languages</div><div class="skill-list"><span class="skill-item">Go</span><span class="skill-item">TypeScript</span><span class="skill-item">Python</span><span class="skill-item">JavaScript</span><span class="skill-item">Java</span></div></div>
                 <div class="skill-group"><div class="skill-group-title">AI / ML</div><div class="skill-list"><span class="skill-item">LLMs</span><span class="skill-item">RAG</span><span class="skill-item">Embeddings</span><span class="skill-item">Ollama</span><span class="skill-item">CUDA</span><span class="skill-item">Whisper</span></div></div>
-                <div class="skill-group"><div class="skill-group-title">Frameworks</div><div class="skill-list"><span class="skill-item">OpenClaw</span><span class="skill-item">PicoClaw</span><span class="skill-item">LangChain</span><span class="skill-item">AutoGPT</span><span class="skill-item">Next.js</span></div></div>
-                <div class="skill-group"><div class="skill-group-title">Infrastructure</div><div class="skill-list"><span class="skill-item">Docker</span><span class="skill-item">Linux</span><span class="skill-item">NVIDIA CUDA</span><span class="skill-item">Git</span><span class="skill-item">CI/CD</span></div></div>
-                <div class="skill-group"><div class="skill-group-title">Databases</div><div class="skill-list"><span class="skill-item">PostgreSQL</span><span class="skill-item">PostGIS</span><span class="skill-item">Qdrant</span><span class="skill-item">Redis</span><span class="skill-item">SQLite</span></div></div>
-                <div class="skill-group"><div class="skill-group-title">Networking</div><div class="skill-list"><span class="skill-item">L2/L3</span><span class="skill-item">OSPF</span><span class="skill-item">BGP</span><span class="skill-item">SNMP</span><span class="skill-item">VLANs</span></div></div>
+                <div class="skill-group"><div class="skill-group-title" data-i18n="skills.frameworks">Frameworks</div><div class="skill-list"><span class="skill-item">OpenClaw</span><span class="skill-item">PicoClaw</span><span class="skill-item">LangChain</span><span class="skill-item">AutoGPT</span><span class="skill-item">Next.js</span></div></div>
+                <div class="skill-group"><div class="skill-group-title" data-i18n="skills.infra">Infrastructure</div><div class="skill-list"><span class="skill-item">Docker</span><span class="skill-item">Linux</span><span class="skill-item">NVIDIA CUDA</span><span class="skill-item">Git</span><span class="skill-item">CI/CD</span></div></div>
+                <div class="skill-group"><div class="skill-group-title" data-i18n="skills.databases">Databases</div><div class="skill-list"><span class="skill-item">PostgreSQL</span><span class="skill-item">PostGIS</span><span class="skill-item">Qdrant</span><span class="skill-item">Redis</span><span class="skill-item">SQLite</span></div></div>
+                <div class="skill-group"><div class="skill-group-title" data-i18n="skills.networking">Networking</div><div class="skill-list"><span class="skill-item">L2/L3</span><span class="skill-item">OSPF</span><span class="skill-item">BGP</span><span class="skill-item">SNMP</span><span class="skill-item">VLANs</span></div></div>
             </div>
         </div>
     </section>
@@ -503,16 +537,16 @@
     <!-- Contact -->
     <section class="contact-section" id="contact">
         <div class="container fade-in">
-            <div class="section-label">Get in Touch</div>
-            <h2 class="section-title">Let's build something.</h2>
-            <p class="section-desc">Open to remote and hybrid positions. Reach out via email or connect on LinkedIn.</p>
+            <div class="section-label" data-i18n="contact.label">Get in Touch</div>
+            <h2 class="section-title" data-i18n="contact.title">Let's build something.</h2>
+            <p class="section-desc" data-i18n="contact.desc">Open to remote and hybrid positions. Reach out via email or connect on LinkedIn.</p>
             <div class="contact-links">
                 <a href="mailto:francojair81@gmail.com" class="btn btn-primary">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     francojair81@gmail.com
                 </a>
                 <a href="https://linkedin.com/in/jair-franco05" class="btn btn-outline" target="_blank">LinkedIn</a>
-                <a href="./resume/" class="btn btn-outline" target="_blank">Download Resume</a>
+                <a href="./resume/" class="btn btn-outline" target="_blank" data-i18n="contact.downloadResume">Download Resume</a>
             </div>
         </div>
     </section>
@@ -864,6 +898,162 @@
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // ━━ i18n ENGINE ━━
+        const translations = {
+            en: {
+                "nav.projects": "Projects", "nav.experience": "Experience", "nav.skills": "Skills",
+                "nav.services": "Services", "nav.resume": "Resume",
+                "hero.badge": "Open to remote & hybrid roles",
+                "hero.role": "Software & Systems Engineer",
+                "hero.sub": '<strong>5+ years</strong> building production infrastructure, AI-powered automation, and security-first agents. Contributor to the <strong>OpenClaw</strong> ecosystem. Hands-on with <strong>Go</strong>, Python, and TypeScript.',
+                "hero.viewResume": "View Resume",
+                "stats.years": "Years Experience", "stats.contributions": "GitHub Contributions",
+                "stats.repos": "Public Repositories", "stats.devices": "Devices Managed",
+                "projects.label": "Open Source & Key Projects", "projects.title": "Things I've built.",
+                "projects.desc": "Security-first agents, network infrastructure, AI pipelines — from concept to production.",
+                "projects.pawgo.name": "PawGo — Security-First AI Agent",
+                "projects.pawgo.desc": 'Security-focused fork of PicoClaw CLI for the OpenClaw ecosystem. Engineered an <strong>AST Effect System</strong> that classifies every shell command before execution — no regex, full semantic security. Completed a 27-finding security audit and integrated 20+ LLM providers with smart routing across 15+ messaging channels.',
+                "projects.claws.name": "CLAW-S Network Manager",
+                "projects.claws.desc": "Enterprise-grade CMDB + NOC with autonomous discovery (ARP, OSPF, BGP, SNMP). Real-time topology visualization and health scoring across 880+ devices.",
+                "projects.scp.name": "System Control Panel",
+                "projects.scp.desc": "GPU-Accelerated RAG platform with bge-m3 embeddings (~8ms inference on RTX 3080), hybrid search, and intelligent VRAM mode switching.",
+                "projects.approval.name": "Approval Buttons Plugin",
+                "projects.approval.desc": "Production plugin for OpenClaw adding inline approval buttons for AI agent execution control. Published to npm with multi-channel support.",
+                "projects.douyin.name": "DouyinStream Pro",
+                "projects.douyin.desc": "Python to Go rewrite. Multi-strategy extraction pipeline, 26+ quality tiers, anti-WAF bypass, 28 security audit reports.",
+                "projects.nemo.name": "NeMo AI Assistant",
+                "projects.nemo.desc": "Local-first personal AI powered by NVIDIA NeMo, Ollama, and Docker. Privacy-focused assistant running entirely on local GPU infrastructure.",
+                "projects.credinet.name": "CrediNet v2 — Credit Management Platform",
+                "projects.credinet.desc": "Full-stack credit management system with biweekly payment engine, automated amortization schedules, associate credit lifecycle, period-based debt reconciliation, and 20+ API routers. Clean Architecture backend with PostgreSQL triggers for audit logging.",
+                "exp.label": "Experience", "exp.title": "Where I've worked.",
+                "exp.desc": "From network infrastructure to AI-powered automation.",
+                "exp.role1": "Software & Network Engineer — AI Automation",
+                "exp.period1": "Mar 2021 — Present · Chihuahua, Mexico · Hybrid",
+                "exp.desc1": "Spearhead AI-driven automation integrating LLMs and agent frameworks into production workflows. Architect CLAW-S Network Manager — full-stack NOC/CMDB platform managing 880+ devices, 14K+ links across 75+ sites.",
+                "exp.role2": "Network Engineer", "exp.period2": "Mar 2021 — Dec 2024",
+                "exp.desc2": "Operated multi-vendor L2/L3 infrastructure (Cisco, Ubiquiti, Mikrotik) with OSPF, BGP, VLANs across 75+ sites. Built Python-based monitoring automation.",
+                "skills.label": "Technical Skills", "skills.title": "My toolkit.",
+                "skills.desc": "Languages, frameworks, and infrastructure I work with daily.",
+                "skills.languages": "Languages", "skills.frameworks": "Frameworks",
+                "skills.infra": "Infrastructure", "skills.databases": "Databases", "skills.networking": "Networking",
+                "contact.label": "Get in Touch", "contact.title": "Let's build something.",
+                "contact.desc": "Open to remote and hybrid positions. Reach out via email or connect on LinkedIn.",
+                "contact.downloadResume": "Download Resume"
+            },
+            es: {
+                "nav.projects": "Proyectos", "nav.experience": "Experiencia", "nav.skills": "Habilidades",
+                "nav.services": "Servicios", "nav.resume": "Currículum",
+                "hero.badge": "Disponible para roles remotos e híbridos",
+                "hero.role": "Ingeniero de Software y Sistemas",
+                "hero.sub": '<strong>5+ años</strong> construyendo infraestructura de producción, automatización con IA y agentes security-first. Contribuidor al ecosistema <strong>OpenClaw</strong>. Experiencia práctica con <strong>Go</strong>, Python y TypeScript.',
+                "hero.viewResume": "Ver Currículum",
+                "stats.years": "Años de Experiencia", "stats.contributions": "Contribuciones en GitHub",
+                "stats.repos": "Repositorios Públicos", "stats.devices": "Dispositivos Gestionados",
+                "projects.label": "Open Source y Proyectos Clave", "projects.title": "Lo que he construido.",
+                "projects.desc": "Agentes de seguridad, infraestructura de redes, pipelines de IA — del concepto a producción.",
+                "projects.pawgo.name": "PawGo — Agente IA Security-First",
+                "projects.pawgo.desc": 'Fork de seguridad de PicoClaw CLI para el ecosistema OpenClaw. Desarrollé un <strong>Sistema de Efectos AST</strong> que clasifica cada comando shell antes de ejecución — sin regex, seguridad semántica completa. Auditoría de seguridad con 27 hallazgos e integración de 20+ proveedores LLM con enrutamiento inteligente en 15+ canales de mensajería.',
+                "projects.claws.name": "CLAW-S Network Manager",
+                "projects.claws.desc": "CMDB + NOC empresarial con descubrimiento autónomo (ARP, OSPF, BGP, SNMP). Visualización de topología en tiempo real y scoring de salud en 880+ dispositivos.",
+                "projects.scp.name": "Panel de Control del Sistema",
+                "projects.scp.desc": "Plataforma RAG acelerada por GPU con embeddings bge-m3 (~8ms de inferencia en RTX 3080), búsqueda híbrida y conmutación inteligente de modos VRAM.",
+                "projects.approval.name": "Plugin de Botones de Aprobación",
+                "projects.approval.desc": "Plugin de producción para OpenClaw que añade botones de aprobación inline para control de ejecución de agentes IA. Publicado en npm con soporte multicanal.",
+                "projects.douyin.name": "DouyinStream Pro",
+                "projects.douyin.desc": "Reescritura de Python a Go. Pipeline de extracción multi-estrategia, 26+ niveles de calidad, bypass anti-WAF, 28 reportes de auditoría de seguridad.",
+                "projects.nemo.name": "NeMo Asistente IA",
+                "projects.nemo.desc": "IA personal local-first con NVIDIA NeMo, Ollama y Docker. Asistente enfocado en privacidad corriendo completamente en infraestructura GPU local.",
+                "projects.credinet.name": "CrediNet v2 — Plataforma de Gestión Crediticia",
+                "projects.credinet.desc": "Sistema full-stack de gestión crediticia con motor de pagos quincenales, calendarios de amortización automatizados, ciclo de vida de créditos, conciliación de deuda por periodo y 20+ routers API. Backend con Clean Architecture y triggers PostgreSQL para auditoría.",
+                "exp.label": "Experiencia", "exp.title": "Dónde he trabajado.",
+                "exp.desc": "De infraestructura de redes a automatización con IA.",
+                "exp.role1": "Ingeniero de Software y Redes — Automatización IA",
+                "exp.period1": "Mar 2021 — Presente · Chihuahua, México · Híbrido",
+                "exp.desc1": "Lidero automatización con IA integrando LLMs y frameworks de agentes en flujos de producción. Arquitecto de CLAW-S Network Manager — plataforma NOC/CMDB full-stack gestionando 880+ dispositivos, 14K+ enlaces en 75+ sitios.",
+                "exp.role2": "Ingeniero de Redes", "exp.period2": "Mar 2021 — Dic 2024",
+                "exp.desc2": "Operé infraestructura L2/L3 multi-vendor (Cisco, Ubiquiti, Mikrotik) con OSPF, BGP, VLANs en 75+ sitios. Desarrollé automatización de monitoreo con Python.",
+                "skills.label": "Habilidades Técnicas", "skills.title": "Mi stack.",
+                "skills.desc": "Lenguajes, frameworks e infraestructura con la que trabajo a diario.",
+                "skills.languages": "Lenguajes", "skills.frameworks": "Frameworks",
+                "skills.infra": "Infraestructura", "skills.databases": "Bases de Datos", "skills.networking": "Redes",
+                "contact.label": "Contacto", "contact.title": "Construyamos algo.",
+                "contact.desc": "Disponible para posiciones remotas e híbridas. Escríbeme por email o conéctate en LinkedIn.",
+                "contact.downloadResume": "Descargar CV"
+            },
+            zh: {
+                "nav.projects": "项目", "nav.experience": "经验", "nav.skills": "技能",
+                "nav.services": "服务", "nav.resume": "简历",
+                "hero.badge": "接受远程和混合工作机会",
+                "hero.role": "软件与系统工程师",
+                "hero.sub": '<strong>5年以上</strong>生产基础设施建设、AI自动化和安全优先代理开发经验。<strong>OpenClaw</strong>生态贡献者。精通<strong>Go</strong>、Python和TypeScript。',
+                "hero.viewResume": "查看简历",
+                "stats.years": "年工作经验", "stats.contributions": "GitHub贡献",
+                "stats.repos": "公开仓库", "stats.devices": "管理设备",
+                "projects.label": "开源与重点项目", "projects.title": "我构建的项目",
+                "projects.desc": "安全代理、网络基础设施、AI流水线——从概念到生产。",
+                "projects.pawgo.name": "PawGo — 安全优先AI代理",
+                "projects.pawgo.desc": 'OpenClaw生态的PicoClaw CLI安全分支。开发了<strong>AST效果系统</strong>，在执行前对每个shell命令进行分类——无正则表达式，完整语义安全。完成27项安全审计，集成20+个LLM提供商，支持15+个消息渠道的智能路由。',
+                "projects.claws.name": "CLAW-S 网络管理器",
+                "projects.claws.desc": "企业级CMDB + NOC，支持自动发现（ARP、OSPF、BGP、SNMP）。880+设备的实时拓扑可视化和健康评分。",
+                "projects.scp.name": "系统控制面板",
+                "projects.scp.desc": "GPU加速的RAG平台，使用bge-m3嵌入（RTX 3080上约8ms推理），混合搜索和智能VRAM模式切换。",
+                "projects.approval.name": "审批按钮插件",
+                "projects.approval.desc": "OpenClaw的生产插件，为AI代理执行控制添加内联审批按钮。已发布到npm，支持多渠道。",
+                "projects.douyin.name": "DouyinStream Pro",
+                "projects.douyin.desc": "Python到Go的重写。多策略提取流水线，26+质量层级，反WAF绕过，28份安全审计报告。",
+                "projects.nemo.name": "NeMo AI助手",
+                "projects.nemo.desc": "本地优先的个人AI，基于NVIDIA NeMo、Ollama和Docker。注重隐私的助手，完全在本地GPU基础设施上运行。",
+                "projects.credinet.name": "CrediNet v2 — 信贷管理平台",
+                "projects.credinet.desc": "全栈信贷管理系统，具有双周支付引擎、自动摊销计划、信贷生命周期管理、基于期间的债务对账和20+ API路由器。使用PostgreSQL触发器的Clean Architecture后端。",
+                "exp.label": "工作经历", "exp.title": "我的工作经历",
+                "exp.desc": "从网络基础设施到AI自动化。",
+                "exp.role1": "软件与网络工程师 — AI自动化",
+                "exp.period1": "2021年3月 — 至今 · 奇瓦瓦，墨西哥 · 混合办公",
+                "exp.desc1": "主导AI驱动的自动化，将LLM和代理框架集成到生产工作流中。架构CLAW-S网络管理器——全栈NOC/CMDB平台，管理880+设备、14K+链路，覆盖75+站点。",
+                "exp.role2": "网络工程师", "exp.period2": "2021年3月 — 2024年12月",
+                "exp.desc2": "运维多厂商L2/L3基础设施（Cisco、Ubiquiti、Mikrotik），配置OSPF、BGP、VLAN，覆盖75+站点。构建Python监控自动化。",
+                "skills.label": "技术能力", "skills.title": "我的工具箱",
+                "skills.desc": "日常使用的语言、框架和基础设施。",
+                "skills.languages": "编程语言", "skills.frameworks": "框架",
+                "skills.infra": "基础设施", "skills.databases": "数据库", "skills.networking": "网络",
+                "contact.label": "联系方式", "contact.title": "一起构建。",
+                "contact.desc": "接受远程和混合工作机会。通过邮件联系或在LinkedIn上连接。",
+                "contact.downloadResume": "下载简历"
+            }
+        };
+
+        function setLang(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.style.opacity = '0';
+                    setTimeout(() => {
+                        el.innerHTML = translations[lang][key];
+                        el.style.opacity = '1';
+                    }, 120);
+                }
+            });
+            document.querySelectorAll('.lang-switch button').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+            });
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+            localStorage.setItem('lang', lang);
+        }
+
+        document.querySelectorAll('.lang-switch button').forEach(btn => {
+            btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
+        });
+
+        // Auto-detect language on first visit
+        const saved = localStorage.getItem('lang');
+        if (saved && translations[saved]) {
+            setLang(saved);
+        } else {
+            const browserLang = navigator.language.slice(0, 2);
+            if (browserLang === 'es') setLang('es');
+            else if (browserLang === 'zh') setLang('zh');
+        }
     })();
     </script>
 </body>
