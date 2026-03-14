@@ -1045,14 +1045,28 @@
             btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
         });
 
-        // Auto-detect language on first visit
+        // Auto-detect language: localStorage > Cloudflare IP geo > browser lang
         const saved = localStorage.getItem('lang');
         if (saved && translations[saved]) {
             setLang(saved);
         } else {
-            const browserLang = navigator.language.slice(0, 2);
-            if (browserLang === 'es') setLang('es');
-            else if (browserLang === 'zh') setLang('zh');
+            // Try Cloudflare IP geolocation (free, no API key, ~50ms)
+            const esCountries = ['MX','AR','CO','CL','PE','EC','VE','UY','PY','BO','CR','PA','DO','GT','HN','SV','NI','CU','ES','PR'];
+            const zhCountries = ['CN','TW','HK','MO','SG'];
+            fetch('/cdn-cgi/trace').then(r => r.text()).then(txt => {
+                const match = txt.match(/loc=([A-Z]{2})/);
+                if (match) {
+                    const cc = match[1];
+                    if (esCountries.includes(cc)) setLang('es');
+                    else if (zhCountries.includes(cc)) setLang('zh');
+                    // else: stay in English (default)
+                }
+            }).catch(() => {
+                // Fallback: use browser language (works on localhost/file://)
+                const bl = navigator.language.slice(0, 2);
+                if (bl === 'es') setLang('es');
+                else if (bl === 'zh') setLang('zh');
+            });
         }
     })();
     </script>

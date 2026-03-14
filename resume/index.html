@@ -804,9 +804,26 @@
         btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
     });
 
-    // Sync with main page preference
+    // Auto-detect language: localStorage > Cloudflare IP geo > browser lang
     const saved = localStorage.getItem('lang');
-    if (saved && t[saved]) setLang(saved);
+    if (saved && t[saved]) {
+        setLang(saved);
+    } else {
+        const esCountries = ['MX','AR','CO','CL','PE','EC','VE','UY','PY','BO','CR','PA','DO','GT','HN','SV','NI','CU','ES','PR'];
+        const zhCountries = ['CN','TW','HK','MO','SG'];
+        fetch('/cdn-cgi/trace').then(r => r.text()).then(txt => {
+            const match = txt.match(/loc=([A-Z]{2})/);
+            if (match) {
+                const cc = match[1];
+                if (esCountries.includes(cc)) setLang('es');
+                else if (zhCountries.includes(cc)) setLang('zh');
+            }
+        }).catch(() => {
+            const bl = navigator.language.slice(0, 2);
+            if (bl === 'es') setLang('es');
+            else if (bl === 'zh') setLang('zh');
+        });
+    }
     </script>
 </body>
 </html>
